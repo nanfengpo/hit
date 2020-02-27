@@ -2,6 +2,7 @@ package hit
 
 import (
 	"errors"
+	"fmt"
 	"image"
 	"log"
 	"strings"
@@ -519,4 +520,28 @@ func TestOrError2(t *testing.T) {
 	if _, ok := a.(error); ok == false && b == 10 {
 		t.Errorf(`a := If(errors.New("test-error"), func() { b = 10 })`)
 	}
+}
+
+func IF(cond bool, t interface{}, f interface{}) interface{} {
+	if cond {
+		return t
+	} else {
+		return f
+	}
+}
+
+// test divide by zero
+func TestDBZ(t *testing.T) {
+	a := 0
+	b := 4
+	c := If(a==0, 0, func()int{return b/a})
+	fmt.Printf("c=%d\n",c)
+	//c = IF(a==0, 0, b/a).(int) // panic
+	//fmt.Printf("c=%d\n",c)
+
+	a = 2
+	c = If(a==0, 0, func()int{return b/a})
+	fmt.Printf("c=%d\n",c)
+	c = IF(a==0, 0, b/a).(int)
+	fmt.Printf("c=%d\n",c)
 }
