@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"image"
 	"log"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -541,7 +542,7 @@ func TestDBZ(t *testing.T) {
 
 	a = 2
 	c = If(a==0, 0, func()int{return b/a})
-	fmt.Printf("c=%d\n",c)
-	c = IF(a==0, 0, b/a).(int)
-	fmt.Printf("c=%d\n",c)
+	fmt.Printf("type of c: %v, c=%d\n",reflect.TypeOf(c), c)
+	c = IF(a==0, 0, b/a)
+	fmt.Printf("type of c: %v, c=%d\n",reflect.TypeOf(c), c)
 }
